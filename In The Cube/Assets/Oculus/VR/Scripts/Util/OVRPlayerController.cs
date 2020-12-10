@@ -11,7 +11,8 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR COND
 ANY KIND, either express or implied. See the License for the specific language governing
 permissions and limitations under the License.
 ************************************************************************************/
-
+using System.Collections;
+using System.Collections.Generic;
 using System;
 using UnityEngine;
 
@@ -182,6 +183,7 @@ public class OVRPlayerController : MonoBehaviour
 
 	void OnEnable()
 	{
+
 	}
 
 	void OnDisable()
@@ -221,6 +223,10 @@ public class OVRPlayerController : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.E))
 			buttonRotation += RotationRatchet;
+        if (OVRInput.Get(OVRInput.Button.Two)) 
+        {
+			//GameManager.instance.Swap
+        }
 	}
 
 	protected virtual void UpdateController()
@@ -501,6 +507,7 @@ public class OVRPlayerController : MonoBehaviour
 		{
 			TransformUpdated(root);
 		}
+		
 	}
 
 	/// <summary>

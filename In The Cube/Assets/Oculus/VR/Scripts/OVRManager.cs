@@ -1825,11 +1825,13 @@ public class OVRManager : MonoBehaviour
 
 	private void OnDisable()
 	{
+		
 		OVRSystemPerfMetrics.OVRSystemPerfMetricsTcpServer perfTcpServer = GetComponent<OVRSystemPerfMetrics.OVRSystemPerfMetricsTcpServer>();
 		if (perfTcpServer != null)
 		{
 			perfTcpServer.enabled = false;
 		}
+		
 	}
 
 	private void LateUpdate()
