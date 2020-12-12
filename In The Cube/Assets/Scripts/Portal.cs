@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
+    public Material openMaterial;
     private bool _isOpen = false;
     public bool isOpen
     {
@@ -11,6 +12,10 @@ public class Portal : MonoBehaviour
         set
         {
             _isOpen = value;
+            if (_isOpen)
+            {
+                GetComponent<MeshRenderer>().material = openMaterial;
+            }
         }
     }
 
