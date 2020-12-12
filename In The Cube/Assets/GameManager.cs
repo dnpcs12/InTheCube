@@ -11,8 +11,11 @@ public class GameManager : MonoBehaviour
     public GameObject CamaraRig;
     public Transform Npc;
 
+    private OVRPlayerController playerController;
+
     bool _isPlayer = true;
     bool _isSwaping = false;
+
 
     public bool isPlayer
     {
@@ -58,9 +61,11 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerController = Player.GetComponent<OVRPlayerController>();
         
     }
 
+    
  
     IEnumerator SwapViewPoint()
     {
@@ -68,12 +73,14 @@ public class GameManager : MonoBehaviour
         if (_isPlayer)
         {
             CamaraRig.transform.SetParent(Npc);
+            playerController.enabled = false;
             _isPlayer = false;
             CamaraRig.transform.position = Npc.localPosition;
         }
         else
         {
             CamaraRig.transform.SetParent(Player);
+            playerController.enabled = true;
             CamaraRig.transform.position = Player.localPosition;
             _isPlayer = true;
         }
@@ -81,11 +88,16 @@ public class GameManager : MonoBehaviour
         _isSwaping = false;
     }
 
+    public void MoveNextStage()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
     // Update is called once per frame
     void Update()
     {
        
-        if (Input.GetKeyDown(KeyCode.Space) || OVRInput.Get(OVRInput.Button.Two))
+        if (Input.GetKeyDown(KeyCode.Space) || OVRInput.GetDown(OVRInput.Button.Two))
         {
             if(!_isSwaping)
             StartCoroutine(SwapViewPoint());
