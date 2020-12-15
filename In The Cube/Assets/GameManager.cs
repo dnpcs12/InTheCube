@@ -103,6 +103,6 @@ public class GameManager : MonoBehaviour
             StartCoroutine(SwapViewPoint());
             
         }
-        
+        if (Input.GetKeyDown(KeyCode.PageUp)) MoveNextStage();
     }
 }
