@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum KeyName { Do, Re, Mi, Fa, Sol, La, Si };
 public class PianoKey : MonoBehaviour
 {
-    public enum key {Do, Re, Mi, Fa, Sol, La, Si };
-
-    public key note;
+    [SerializeField]
+    private MusicChecker checker;
+    public KeyName note;
+    float[] pitchs = { 1, 1.12f, 1.26f, 1.337f, 1.50f, 1.68f, 1.88f };
     AudioSource audio;
     float originPitch;
 
@@ -15,15 +17,18 @@ public class PianoKey : MonoBehaviour
         audio = GetComponent<AudioSource>();
         originPitch = audio.pitch;
     }
-    private void OnTriggerEnter(Collider other)
+
+    private void OnCollisionEnter(Collision collision)
     {
-        print(other.name);
-        if(other.name == "stick")
+     
+        if(collision.gameObject.name == "stick")
         {
-            
-            audio.pitch = originPitch + 0.11f * (int)note;
+            audio.pitch = originPitch * pitchs[(int)note];
             audio.Play();
-            print(note);
+            checker.AddCurKey(note);
         }
+        
+
     }
+
 }

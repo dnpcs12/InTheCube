@@ -11,7 +11,6 @@ public class Gun : MonoBehaviour
     private float firetime = 0.1f;
     public void Fire()
     {
-        print("fire");
         Instantiate(bullet, firePoint.position, firePoint.rotation);
     }
 }
