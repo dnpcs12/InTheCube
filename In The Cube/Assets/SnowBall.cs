@@ -6,11 +6,12 @@ public class SnowBall : MonoBehaviour
 {
     Rigidbody rigidbody;
     public Vector3 maxScale = new Vector3(0.8f, 0.8f, 0.8f);
-    bool isAttach = false;
+    static bool isAttach = false;
 
     bool isSnowBallContact = false;
     Collision opponentCol;
-
+    public GameObject snowMan;
+    
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -20,42 +21,18 @@ public class SnowBall : MonoBehaviour
     public void AttachSnowManHead()
     {
 
-        if (!isSnowBallContact) return;
+        //if (!isSnowBallContact) return;
 
 
         print("붙임");
         
         transform.position = opponentCol.transform.position + new Vector3(0,transform.localScale.y,0);
-        transform.SetParent(opponentCol.transform);
+        //transform.SetParent(opponentCol.transform);
         rigidbody.isKinematic = true;
         rigidbody.velocity = Vector3.zero;
         rigidbody.freezeRotation = true;
         isAttach = true;
-
-        //hit.collider.GetComponent<Rigidbody>().isKinematic = true;
-
-        /*
-        Ray ray = new Ray();
-        ray.origin = transform.position;
-        ray.direction = Vector3.down;
-
-       
-        if (Physics.Raycast(ray,out RaycastHit hit,5f ,LayerMask.NameToLayer("Grab")))
-        {
-          
-            if (hit.collider != null)
-            {
-                print("머리 붙여보쟈" + name + " " + hit.collider.name );
-                if (hit.collider.tag != "SnowBall") return;
-
-                print("붙임");
-                transform.position = hit.transform.position + new Vector3(0, hit.transform.localScale.y,0);
-                rigidbody.isKinematic = true;
-                rigidbody.velocity = Vector3.zero;
-                hit.collider.GetComponent<Rigidbody>().isKinematic = true;
-            }
-        }
-        */
+ 
     }
 
     public void SetStop() {
@@ -71,6 +48,18 @@ public class SnowBall : MonoBehaviour
         {
             if(transform.localScale.x < maxScale.x)
             transform.localScale += Vector3.one * 0.01f * Time.deltaTime;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        print(other.tag + " " + isAttach);
+        
+        if(other.tag == "Box")
+        {
+            Instantiate(snowMan,new Vector3(transform.position.x,0,transform.position.z), Quaternion.Euler(new Vector3(0,180,0)));
+            transform.parent.gameObject.SetActive(false);
+            
         }
     }
 
@@ -94,7 +83,7 @@ public class SnowBall : MonoBehaviour
         {
             isSnowBallContact = false;
             //rigidbody.isKinematic = false;
-            opponentCol = null;
+        
         }
     }
 
