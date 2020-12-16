@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour
 {
     public float speed;
     public float lifetime;
+    
     private void Start()
     {
         Destroy(gameObject, lifetime);
