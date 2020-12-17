@@ -5,7 +5,7 @@ using UnityEngine;
 public class Portal : MonoBehaviour
 {
     public Material openMaterial;
-    private bool _isOpen = true;
+    private bool _isOpen = false;
     public bool isOpen
     {
         get => _isOpen;
